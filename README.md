@@ -388,3 +388,21 @@ if (ImGui::Button("FÁCIL - 3 BOLAS", ImVec2(300, 80))) {
     }
 
 ```
+**OpenGLWindow::checkFound** 
+
+Essa função verifica se algumas das bolas foi encontrada, para isso é realizado uma interação na lista m_balls e posteriormente checamos se a bola ainda não foi encontrada, caso o atributo wasFound for igual a false, então realizamos um cálculo de distância entre a posição da bola e a posição da câmera, caso essa distância for menor que 0.8f, atribuímos o valor do wasFound como true e modificamos o contador de items encontrados (váriavel numberOfFoundItems).
+```
+void OpenGLWindow::checkFound() {
+  for (auto& ball : m_balls) {
+    if (!ball.wasFound) {
+      const auto distance{
+          glm::distance(glm::vec3(ball.position_x, 0, ball.position_z),
+                        glm::vec3(m_camera.m_eye.x, 0, m_camera.m_eye.z))};
+      if (distance < 0.8f) {
+        ball.wasFound = true;
+        numberOfFoundItems++;
+      }
+    }
+  }
+}
+```
