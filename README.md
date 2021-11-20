@@ -273,3 +273,99 @@ glm::mat4 house_model{1.0f};
   m_house_model.render(-1);
 
 ```
+
+**OpenGLWindow::PaintUI**
+
+```
+void OpenGLWindow::paintUI() {
+  abcg::OpenGLWindow::paintUI();
+
+  const auto size{ImVec2(500, 500)};
+  const auto position{ImVec2((m_viewportWidth - size.x) / 2.0f,
+                             (m_viewportHeight - size.y) / 2.0f)};
+  ImGui::SetNextWindowPos(position);
+  ImGui::SetNextWindowSize(size);
+  ImGuiWindowFlags flags{};
+
+  // As flags serão relativas ao estado do jogo
+  if (m_gameData.m_state == State::Playing) {
+    flags = {ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoTitleBar |
+             ImGuiWindowFlags_NoInputs};
+
+  } else {
+    flags = {ImGuiWindowFlags_NoDecoration};
+  }
+
+  ImGui::Begin(" ", nullptr, flags);
+  ImGui::PushFont(m_font);
+
+  if (m_gameData.m_state == State::Init) {
+    ImGui::Text("VOCÊ TEM 20 SEGUNDOS PARA ENCONTRAR TODAS AS BOLAS");
+    if (ImGui::Button("Jogar", ImVec2(300, 80))) {
+      initBalls(5);
+      m_gameData.m_state = State::Menu;
+    }
+  } else if (m_gameData.m_state == State::Menu) {
+    if (ImGui::Button("FÁCIL - 3 BOLAS", ImVec2(300, 80))) {
+      m_gameData.m_state = State::Playing;
+      initBalls(3);
+    }
+    if (ImGui::Button("MÉDIO - 4 BOLAS", ImVec2(300, 80))) {
+      m_gameData.m_state = State::Playing;
+      initBalls(4);
+    }
+    if (ImGui::Button("DIFÍCIL- 6 BOLAS ", ImVec2(300, 80))) {
+      m_gameData.m_state = State::Playing;
+      initBalls(6);
+    }
+
+  } else if (m_gameData.m_state == State::Playing) {
+    std::string text = std::to_string(numberOfFoundItems);
+    char const* textFormat = text.c_str();
+    ImGui::Text("NÚMERO DE BOLAS ENCONTRADAS :");
+    ImGui::Text(textFormat);
+  } else {
+    const char* message =
+        m_gameData.m_state == State::GameOver ? "Você Perdeu" : "Você Ganhou";
+    ImGui::Text(message);
+    if (ImGui::Button("Jogar Novamente", ImVec2(300, 80))) {
+      numberOfFoundItems = 0;
+      m_gameData.m_state = State::Menu;
+    }
+  }
+
+  ImGui::PopFont();
+  ImGui::End();
+}
+```
+
+Na função paintUI definimos alguns processos importantes :
+
+. m_gamedata.m_state igual a Init :
+      -  Tela com informações do jogo e botão que leva para o menu.
+       ```
+        ImGui::Text("VOCÊ TEM 20 SEGUNDOS PARA ENCONTRAR TODAS AS BOLAS");
+       if (ImGui::Button("Jogar", ImVec2(300, 80))) {
+           initBalls(5);
+           m_gameData.m_state = State::Menu;
+      }
+    ```
+       
+
+. m_gamedata.m_state igual a Menu :
+       Tela com 3 botões que definirá a dificuldade do jogo, isto é, qual o número de bolas que precisarão ser adicionadas na lista m_balls, definido assim a quantidade de bolas renderizadas.
+       ```
+        if (ImGui::Button("FÁCIL - 3 BOLAS", ImVec2(300, 80))) {
+      m_gameData.m_state = State::Playing;
+      initBalls(3);
+    }
+    if (ImGui::Button("MÉDIO - 4 BOLAS", ImVec2(300, 80))) {
+      m_gameData.m_state = State::Playing;
+      initBalls(4);
+    }
+    if (ImGui::Button("DIFÍCIL- 6 BOLAS ", ImVec2(300, 80))) {
+      m_gameData.m_state = State::Playing;
+      initBalls(6);
+    }
+    ``
+       
