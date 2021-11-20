@@ -46,7 +46,6 @@ m_balls - lista de BallPosition
 
 ```
 std::list<BallPosition> m_balls;
-
 ```
   
  
