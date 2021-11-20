@@ -6,7 +6,7 @@ gamedata.hpp :
 
 Estrutura que define o estado atual do jogo
 
-`
+```
 #ifndef GAMEDATA_HPP_
 #define GAMEDATA_HPP_
 
@@ -18,7 +18,7 @@ struct GameData {
   State m_state{State::Init};
   };
 
-#endif `
+#endif ```
 
 m_state pode ser:
 
