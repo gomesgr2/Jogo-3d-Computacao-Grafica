@@ -18,7 +18,8 @@ struct GameData {
   State m_state{State::Init};
   };
 
-#endif ```
+#endif 
+```
 
 m_state pode ser:
 
