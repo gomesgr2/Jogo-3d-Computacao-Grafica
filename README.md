@@ -132,7 +132,7 @@ Instâncias da classe Model, que irão construir a bola e casa.
 
 ### openglwindow.cpp
 
-**OpenGL::initializeGL**
+**OpenGLWindow::initializeGL**
 
 ```
 void OpenGLWindow::initializeGL() {
@@ -158,7 +158,7 @@ void OpenGLWindow::initializeGL() {
   resizeGL(getWindowSettings().width, getWindowSettings().height);
 }
 ```
-**OpenGL::initBalls**
+**OpenGLWindow::initBalls**
 
 Primeiramente removemos os atributos da lista de bolas (m_balls), em seguida atribuimos o tamanho da lista de acordo com a quantidade de bolas (essa quantidade será escolhida pelo usuário, por fim populamos a lista, nessa parte adicionamos nos atribuitos position_x e position_z valores aleatórios entre -2 e 2 e adicionamos no atributo wasFound o valor false, tendo em vista que no inicio nenhuma bola foi encontrada.
 
@@ -176,3 +176,100 @@ void OpenGLWindow::initBalls(int quantity) {
 
 ```
 
+**OpenGLWindow::paintGL**
+
+```
+void OpenGLWindow::paintGL() {
+  update();
+
+  // Clear color buffer and depth buffer
+  abcg::glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+  abcg::glViewport(0, 0, m_viewportWidth, m_viewportHeight);
+
+  abcg::glUseProgram(m_program);
+
+  // Get location of uniform variables (could be precomputed)
+  const GLint viewMatrixLoc{
+      abcg::glGetUniformLocation(m_program, "viewMatrix")};
+  const GLint projMatrixLoc{
+      abcg::glGetUniformLocation(m_program, "projMatrix")};
+  const GLint modelMatrixLoc{
+      abcg::glGetUniformLocation(m_program, "modelMatrix")};
+  const GLint colorLoc{abcg::glGetUniformLocation(m_program, "color")};
+
+  // Set uniform variables for viewMatrix and projMatrix
+  // These matrices are used for every scene object
+  abcg::glUniformMatrix4fv(viewMatrixLoc, 1, GL_FALSE,
+                           &m_camera.m_viewMatrix[0][0]);
+  abcg::glUniformMatrix4fv(projMatrixLoc, 1, GL_FALSE,
+                           &m_camera.m_projMatrix[0][0]);
+
+  abcg::glBindVertexArray(m_VAO);
+
+  for (auto& ball : m_balls) {
+    glm::mat4 ball_model{1.0f};
+    // Draw ball
+    ball_model = glm::translate(ball_model,
+                                glm::vec3(ball.position_x, 0, ball.position_z));
+    ball_model =
+        glm::rotate(ball_model, glm::radians(90.0f), glm::vec3(0, 1, 0));
+    ball_model = glm::scale(ball_model, glm::vec3(0.1f));
+
+    abcg::glUniformMatrix4fv(modelMatrixLoc, 1, GL_FALSE, &ball_model[0][0]);
+
+    if (ball.wasFound) {
+      abcg::glUniform4f(colorLoc, 0.0f, 0.8f, 1.0f, 1.0f);
+    } else {
+      abcg::glUniform4f(colorLoc, 1.0f, 0.25f, 0.25f, 1.0f);
+    }
+
+    m_ball_model.render(-1);
+  }
+
+  glm::mat4 house_model{1.0f};
+  house_model = glm::translate(house_model, glm::vec3(0.5f, 0.0f, 5.0f));
+  house_model =
+      glm::rotate(house_model, glm::radians(90.0f), glm::vec3(0, 1, 0));
+  house_model = glm::scale(house_model, glm::vec3(5.0f));
+  abcg::glUniform4f(colorLoc, 0.99f, 0.77f, 0.53f, 0.0f);
+  m_house_model.render(-1);
+
+  abcg::glUseProgram(0);
+}
+``
+Criação das bolas, de acordo com a lista m_balls, nesse processo é atribuído a posição inicial das bolas de acordo com os valores definidos na função initBalls(), além disso, caso o atributo wasFound for true a cor da bola muda para azul se não teremos a cor em vermelho.
+
+```
+ for (auto& ball : m_balls) {
+    glm::mat4 ball_model{1.0f};
+    // Draw ball
+    ball_model = glm::translate(ball_model,
+                                glm::vec3(ball.position_x, 0, ball.position_z));
+    ball_model =
+        glm::rotate(ball_model, glm::radians(90.0f), glm::vec3(0, 1, 0));
+    ball_model = glm::scale(ball_model, glm::vec3(0.1f));
+
+    abcg::glUniformMatrix4fv(modelMatrixLoc, 1, GL_FALSE, &ball_model[0][0]);
+
+    if (ball.wasFound) {
+      abcg::glUniform4f(colorLoc, 0.0f, 0.8f, 1.0f, 1.0f);
+    } else {
+      abcg::glUniform4f(colorLoc, 1.0f, 0.25f, 0.25f, 1.0f);
+    }
+
+    m_ball_model.render(-1);
+  }
+
+```
+Criação da casa :
+```
+glm::mat4 house_model{1.0f};
+  house_model = glm::translate(house_model, glm::vec3(0.5f, 0.0f, 5.0f));
+  house_model =
+      glm::rotate(house_model, glm::radians(90.0f), glm::vec3(0, 1, 0));
+  house_model = glm::scale(house_model, glm::vec3(5.0f));
+  abcg::glUniform4f(colorLoc, 0.99f, 0.77f, 0.53f, 0.0f);
+  m_house_model.render(-1);
+
+```
