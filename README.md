@@ -49,6 +49,7 @@ std::list<BallPosition> m_balls;
 
 ```
   
+ 
 numberOfFoundItems - variável que determina o número de bolas encontradas pelo usuário 
 
 ```
