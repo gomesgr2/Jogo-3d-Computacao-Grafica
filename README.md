@@ -406,3 +406,21 @@ void OpenGLWindow::checkFound() {
   }
 }
 ```
+
+**OpenGLWindow::checkWinCondition**
+
+Essa função verifica as condições do jogo, assim temos que caso a variável numberOfFoundItems (contador de bolas encontradas) for igual ao tamanho da lista m_ball, significa que todas as bolas foram encontradas pelo usuário, então mudamos o m_gameData.m_state para Win e reiniciamos o tempo. Caso o tempo de jogo ultrapasse os 20 seg e o usuário não encontrou todas as bolas, mudamos o m_gameData.m_state para GameOver e reiniciamos o tempo.
+
+```
+void OpenGLWindow::checkGameCondition() {
+  if (m_game_time.elapsed() > 20) {
+    m_gameData.m_state = State::GameOver;
+    m_game_time.restart();
+  }
+
+  if (numberOfFoundItems == m_balls.size()) {
+    m_gameData.m_state = State::Win;
+    m_game_time.restart();
+  }
+}
+```
