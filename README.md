@@ -377,7 +377,7 @@ if (ImGui::Button("FÁCIL - 3 BOLAS", ImVec2(300, 80))) {
     ImGui::Text(textFormat);
 ```
 - m_gamedata.m_state igual a GameOver ou Win :
-  Tela que mostrará se o usuário ganhou ou perdeu o jogo, e botão de jogar novamente que além de mudar o estado do jogo para Menu, reinicializa a variável numberOfFoundItems
+  - Tela que mostrará se o usuário ganhou ou perdeu o jogo, e botão de jogar novamente que além de mudar a variável m_gamedata para Menu, reinicializa a variável numberOfFoundItems
 ```
  const char* message =
         m_gameData.m_state == State::GameOver ? "Você Perdeu" : "Você Ganhou";
