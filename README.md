@@ -343,8 +343,7 @@ void OpenGLWindow::paintUI() {
 
 -  m_gamedata.m_state igual a Init :
       -  Tela com informações do jogo e botão que leva para o menu :
-             ```
-              ImGui::Text("VOCÊ TEM 20 SEGUNDOS PARA ENCONTRAR TODAS AS BOLAS");
+             ```ImGui::Text("VOCÊ TEM 20 SEGUNDOS PARA ENCONTRAR TODAS AS BOLAS");
              if (ImGui::Button("Jogar", ImVec2(300, 80))) {
                  initBalls(5);
                  m_gameData.m_state = State::Menu;
