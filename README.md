@@ -339,9 +339,9 @@ void OpenGLWindow::paintUI() {
 }
 ```
 
-Na função paintUI definimos alguns processos importantes :
+**Na função paintUI definimos alguns processos importantes** :
 
-. m_gamedata.m_state igual a Init :
+-  m_gamedata.m_state igual a Init :
       -  Tela com informações do jogo e botão que leva para o menu.
        ```
         ImGui::Text("VOCÊ TEM 20 SEGUNDOS PARA ENCONTRAR TODAS AS BOLAS");
@@ -352,7 +352,7 @@ Na função paintUI definimos alguns processos importantes :
     ```
        
 
-. m_gamedata.m_state igual a Menu :
+- m_gamedata.m_state igual a Menu :
        Tela com 3 botões que definirá a dificuldade do jogo, isto é, qual o número de bolas que precisarão ser adicionadas na lista m_balls, definido assim a quantidade de bolas renderizadas.
        ```
         if (ImGui::Button("FÁCIL - 3 BOLAS", ImVec2(300, 80))) {
@@ -367,5 +367,5 @@ Na função paintUI definimos alguns processos importantes :
       m_gameData.m_state = State::Playing;
       initBalls(6);
     }
-    ``
+    ```
        
