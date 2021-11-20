@@ -130,5 +130,49 @@ Instâncias da classe Model, que irão construir a bola e casa.
  Model m_house_model;
 ```
 
+### openglwindow.cpp
 
+**OpenGL::initializeGL**
+
+```
+void OpenGLWindow::initializeGL() {
+  abcg::glClearColor(0, 0, 0, 1);
+
+  // Enable depth buffering
+  abcg::glEnable(GL_DEPTH_TEST);
+
+  // Create program
+  m_program = createProgramFromFile(getAssetsPath() + "lookat.vert",
+                                    getAssetsPath() + "lookat.frag");
+
+  // Load model
+  m_ball_model.loadObj(getAssetsPath() + "soccer ball.obj", false);
+  m_house_model.loadObj(getAssetsPath() + "cottage_obj.obj", false);
+
+  m_randomEngine.seed(
+      std::chrono::steady_clock::now().time_since_epoch().count());
+
+  m_ball_model.setupVAO(m_program);
+  m_house_model.setupVAO(m_program);
+
+  resizeGL(getWindowSettings().width, getWindowSettings().height);
+}
+```
+**OpenGL::initBalls**
+
+Primeiramente removemos os atributos da lista de bolas (m_balls), em seguida atribuimos o tamanho da lista de acordo com a quantidade de bolas (essa quantidade será escolhida pelo usuário, por fim populamos a lista, nessa parte adicionamos nos atribuitos position_x e position_z valores aleatórios entre -2 e 2 e adicionamos no atributo wasFound o valor false, tendo em vista que no inicio nenhuma bola foi encontrada.
+
+```
+void OpenGLWindow::initBalls(int quantity) {
+  m_balls.clear();
+  m_balls.resize(quantity);
+  auto& re{m_randomEngine};
+  for (auto& ball : m_balls) {
+    ball.position_x = m_randomDist(re);
+    ball.position_z = m_randomDist(re);
+    ball.wasFound = false;
+  }
+}
+
+```
 
