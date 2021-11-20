@@ -343,18 +343,18 @@ void OpenGLWindow::paintUI() {
 
 -  m_gamedata.m_state igual a Init :
       -  Tela com informações do jogo e botão que leva para o menu :
-             ```ImGui::Text("VOCÊ TEM 20 SEGUNDOS PARA ENCONTRAR TODAS AS BOLAS");
+```             
+ImGui::Text("VOCÊ TEM 20 SEGUNDOS PARA ENCONTRAR TODAS AS BOLAS");
              if (ImGui::Button("Jogar", ImVec2(300, 80))) {
                  initBalls(5);
                  m_gameData.m_state = State::Menu;
             }
-          ```
-
+```
 
 - m_gamedata.m_state igual a Menu :
        Tela com 3 botões que definirá a dificuldade do jogo, isto é, qual o número de bolas que precisarão ser adicionadas na lista m_balls, definido assim a quantidade de bolas renderizadas :
-       ```
-        if (ImGui::Button("FÁCIL - 3 BOLAS", ImVec2(300, 80))) {
+```
+if (ImGui::Button("FÁCIL - 3 BOLAS", ImVec2(300, 80))) {
       m_gameData.m_state = State::Playing;
       initBalls(3);
     }
@@ -366,5 +366,25 @@ void OpenGLWindow::paintUI() {
       m_gameData.m_state = State::Playing;
       initBalls(6);
     }
-    ```
-       
+
+```
+- m_gamedata.m_state igual a Playing :
+   - Mostrará o número de bolas que foram encontradas até o momento :
+```
+  std::string text = std::to_string(numberOfFoundItems);
+    char const* textFormat = text.c_str();
+    ImGui::Text("NÚMERO DE BOLAS ENCONTRADAS :");
+    ImGui::Text(textFormat);
+```
+- m_gamedata.m_state igual a GameOver ou Win :
+  Tela que mostrará se o usuário ganhou ou perdeu o jogo, e botão de jogar novamente que além de mudar o estado do jogo para Menu, reinicializa a variável numberOfFoundItems
+```
+ const char* message =
+        m_gameData.m_state == State::GameOver ? "Você Perdeu" : "Você Ganhou";
+    ImGui::Text(message);
+    if (ImGui::Button("Jogar Novamente", ImVec2(300, 80))) {
+      numberOfFoundItems = 0;
+      m_gameData.m_state = State::Menu;
+    }
+
+```
