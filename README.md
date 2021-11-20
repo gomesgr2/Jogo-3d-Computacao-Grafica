@@ -237,7 +237,7 @@ void OpenGLWindow::paintGL() {
 
   abcg::glUseProgram(0);
 }
-``
+```
 Criação das bolas, de acordo com a lista m_balls, nesse processo é atribuído a posição inicial das bolas de acordo com os valores definidos na função initBalls(), além disso, caso o atributo wasFound for true a cor da bola muda para azul se não teremos a cor em vermelho.
 
 ```
