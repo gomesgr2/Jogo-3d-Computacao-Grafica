@@ -96,7 +96,7 @@ class OpenGLWindow : public abcg::OpenGLWindow {
 
 #endif
 
-``
+```
 
 
 BallPosition - define as propriedades das bolas que terão uma posição x e z aleatórias (entre -2 e 2) e uma terceira propriedade que define se o bola foi encontrada pelo usuário.
