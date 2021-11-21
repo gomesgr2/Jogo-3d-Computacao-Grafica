@@ -1,4 +1,4 @@
-# Jogo 3d FindBalls - Computacao-Grafica
+# Jogo 3d FindBalls - Computação Grafica
 
 ### Principais Implementações 
 
