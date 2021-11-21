@@ -28,6 +28,8 @@ m_state pode ser:
     Win : aplicação na tela de finalização do jogo com a mensagem "Você Ganhou" e botão para jogar novamente, neste caso a pessoa e as bolas não são exibidas.
     Init : aplicação na tela de inicialização aparecendo botão com a mensagem "Jogar".
     Menu : aplicação de escolha da dificuldade do jogo com os botões : Fácil, Médio e Difícil.
+    
+    
 
 ### openglwindow.hpp
 
@@ -424,3 +426,6 @@ void OpenGLWindow::checkGameCondition() {
   }
 }
 ```
+
+### Model e Camera
+Essas classes foram criadas com base nas aulas 7 e 8, assim usamos o código apresentado em aula. 
