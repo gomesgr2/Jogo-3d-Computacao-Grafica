@@ -1,4 +1,4 @@
-# Jogo 3d FindBalls - Computacao-Grafica
+# Jogo 3d FindBalls - Computação Grafica
 
 ### Principais Implementações 
 
@@ -427,5 +427,5 @@ void OpenGLWindow::checkGameCondition() {
 }
 ```
 
-### Model e Camera
+### Model e Câmera
 Essas classes foram criadas com base nas aulas 7 e 8, assim usamos o código apresentado em aula. 
