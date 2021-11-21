@@ -28,8 +28,6 @@ class OpenGLWindow : public abcg::OpenGLWindow {
 
  private:
   GLuint m_VAO{};
-  GLuint m_VBO{};
-  GLuint m_EBO{};
   GLuint m_program{};
 
   int m_viewportWidth{};

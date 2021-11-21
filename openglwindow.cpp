@@ -158,21 +158,27 @@ void OpenGLWindow::paintUI() {
   ImGui::PushFont(m_font);
 
   if (m_gameData.m_state == State::Init) {
+    ImGui::Text("VOCÊ TEM 20 SEGUNDOS PARA ENCONTRAR TODAS AS BOLAS");
     if (ImGui::Button("Jogar", ImVec2(300, 80))) {
       initBalls(5);
       m_gameData.m_state = State::Menu;
     }
   } else if (m_gameData.m_state == State::Menu) {
-    if (ImGui::Button("Facil", ImVec2(300, 80))) {
+    if (ImGui::Button("FÁCIL - 3 BOLAS", ImVec2(300, 80))) {
       m_gameData.m_state = State::Playing;
+      m_game_time.restart();
       initBalls(3);
     }
-    if (ImGui::Button("Médio", ImVec2(300, 80))) {
+    if (ImGui::Button("MÉDIO - 4 BOLAS", ImVec2(300, 80))) {
       m_gameData.m_state = State::Playing;
+      m_game_time.restart();
+
       initBalls(4);
     }
-    if (ImGui::Button("Dificil", ImVec2(300, 80))) {
+    if (ImGui::Button("DIFÍCIL- 6 BOLAS ", ImVec2(300, 80))) {
       m_gameData.m_state = State::Playing;
+      m_game_time.restart();
+
       initBalls(6);
     }
 
@@ -239,8 +245,7 @@ void OpenGLWindow::checkFound() {
       const auto distance{
           glm::distance(glm::vec3(ball.position_x, 0, ball.position_z),
                         glm::vec3(m_camera.m_eye.x, 0, m_camera.m_eye.z))};
-      bool wasFound = distance < 0.8f;
-      if (wasFound && !ball.wasFound) {
+      if (distance < 0.8f) {
         ball.wasFound = true;
         numberOfFoundItems++;
       }
